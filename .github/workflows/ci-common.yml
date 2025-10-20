@@ -1,3 +1,15 @@
+name: CI Develop
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:  # Permet de lancer manuellement via l'IHM
+  
+env: 
+  AZURE_WEBAPP_NAME: 'globomantics-web-game-touig'   # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '9.0'
+  
 jobs:
   verify:
     name: Vérification initiale
