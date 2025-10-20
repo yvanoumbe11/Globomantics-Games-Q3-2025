@@ -23,3 +23,17 @@ jobs:
 
       - name: Vérification de l'intégrité du projet
         run: echo "Vérification OK"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Log environment
+        run: env
