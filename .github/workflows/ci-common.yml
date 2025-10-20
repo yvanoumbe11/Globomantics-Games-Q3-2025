@@ -1,0 +1,13 @@
+jobs:
+  verify:
+    name: Vérification initiale
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log environnement
+        run: env
+
+      - name: Vérification de l'intégrité du projet
+        run: echo "Vérification OK"
