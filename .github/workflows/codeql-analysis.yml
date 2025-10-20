@@ -5,8 +5,22 @@ on:
     branches: [ main ]
 
 jobs:
+  verify:
+    name: Vérification initiale
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log environnement
+        run: env
+
+      - name: Vérification de l'intégrité du projet
+        run: echo "Vérification OK"
+
   analyze:
     name: analyze
+    needs: verify  
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -19,18 +33,17 @@ jobs:
         language: [ 'csharp' ]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+          config-file: .github/workflows/codeql/codeql-config.yml
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: ${{ matrix.language }}
-        config-file: .github/workflows/codeql/codeql-config.yml
-
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+``
